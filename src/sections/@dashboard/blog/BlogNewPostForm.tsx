@@ -7,8 +7,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Grid, Card, Stack, Button, Typography } from '@mui/material';
+import {
+  Grid,
+  Card,
+  Stack,
+  Button,
+  Typography,
+  CardHeader,
+  CardContent,
+  Divider,
+} from '@mui/material';
 // routes
+import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
+import { Box } from '@mui/system';
+import Iconify from 'src/components/iconify/Iconify';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
 import { IBlogNewPost } from '../../../@types/blog';
@@ -111,140 +123,60 @@ export default function BlogNewPostForm() {
     }
   };
 
-  const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-
-      const newFile = Object.assign(file, {
-        preview: URL.createObjectURL(file),
-      });
-
-      if (file) {
-        setValue('cover', newFile, { shouldValidate: true });
-      }
-    },
-    [setValue]
-  );
-
-  const handleRemoveFile = () => {
-    setValue('cover', null);
-  };
-
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <Card sx={{ p: 3 }}>
-            <Stack spacing={3}>
-              <RHFTextField name="title" label="Post Title" />
-
-              <RHFTextField name="description" label="Description" multiline rows={3} />
-
-              <Stack spacing={1}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                  Content
-                </Typography>
-
-                <RHFEditor simple name="content" />
+        <Grid item xs={12} md={5}>
+          <Card sx={{ p: 3, height: '100%' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <Stack spacing={3}>
+                <RHFTextField name="title" label="Post Title" />
+                <RHFTextField name="description" label="Description" multiline rows={11} />
               </Stack>
-
-              <Stack spacing={1}>
-                <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                  Cover
-                </Typography>
-
-                <RHFUpload
-                  name="cover"
-                  maxSize={3145728}
-                  onDrop={handleDrop}
-                  onDelete={handleRemoveFile}
-                />
+              <Box sx={{ flexGrow: 1 }} />
+              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                <Button
+                  fullWidth
+                  color="inherit"
+                  variant="outlined"
+                  size="large"
+                  onClick={handleOpenPreview}
+                >
+                  Clear
+                </Button>
+                <LoadingButton
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  loading={isSubmitting}
+                >
+                  Submit
+                </LoadingButton>
               </Stack>
-            </Stack>
+            </Box>
           </Card>
         </Grid>
 
-        <Grid item xs={12} md={4}>
-          <Card sx={{ p: 3 }}>
-            <Stack spacing={3}>
-              <div>
-                <RHFSwitch
-                  name="publish"
-                  label="Publish"
-                  labelPlacement="start"
-                  sx={{ mb: 1, mx: 0, width: 1, justifyContent: 'space-between' }}
-                />
-
-                <RHFSwitch
-                  name="comments"
-                  label="Enable comments"
-                  labelPlacement="start"
-                  sx={{ mx: 0, width: 1, justifyContent: 'space-between' }}
-                />
-              </div>
-
-              <RHFAutocomplete
-                name="tags"
-                label="Tags"
-                multiple
-                freeSolo
-                options={TAGS_OPTION.map((option) => option)}
-                ChipProps={{ size: 'small' }}
-              />
-
-              <RHFTextField name="metaTitle" label="Meta title" />
-
-              <RHFTextField
-                name="metaDescription"
-                label="Meta description"
-                fullWidth
-                multiline
-                rows={3}
-              />
-
-              <RHFAutocomplete
-                name="metaKeywords"
-                label="Meta keywords"
-                multiple
-                freeSolo
-                options={TAGS_OPTION.map((option) => option)}
-                ChipProps={{ size: 'small' }}
-              />
-            </Stack>
+        <Grid item xs={12} md={7}>
+          <Card dir="ltr">
+            <CardHeader title="Column Multiple" />
+            <CardContent>
+              <ChartColumnMultiple />
+            </CardContent>
+            <Divider />
+            <Box sx={{ p: 2, textAlign: 'right' }}>
+              <Button
+                size="small"
+                color="inherit"
+                endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
+              >
+                View All
+              </Button>
+            </Box>
           </Card>
-
-          <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
-            <Button
-              fullWidth
-              color="inherit"
-              variant="outlined"
-              size="large"
-              onClick={handleOpenPreview}
-            >
-              Preview
-            </Button>
-
-            <LoadingButton
-              fullWidth
-              type="submit"
-              variant="contained"
-              size="large"
-              loading={isSubmitting}
-            >
-              Post
-            </LoadingButton>
-          </Stack>
         </Grid>
       </Grid>
-
-      <BlogNewPostPreview
-        values={values}
-        open={openPreview}
-        isValid={isValid}
-        isSubmitting={isSubmitting}
-        onClose={handleClosePreview}
-        onSubmit={handleSubmit(onSubmit)}
-      />
     </FormProvider>
   );
 }
