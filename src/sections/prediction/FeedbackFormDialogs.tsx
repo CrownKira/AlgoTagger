@@ -23,6 +23,10 @@ export default function FeedbackFormDialogs() {
   };
 
   const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSend = () => {
     enqueueSnackbar(
       'Apologies, we are not accepting feedback at the moment. Thank you for your understanding.',
       { variant: 'info' }
@@ -56,7 +60,7 @@ export default function FeedbackFormDialogs() {
           <Button onClick={handleClose} color="inherit">
             Cancel
           </Button>
-          <Button onClick={handleClose} variant="contained">
+          <Button onClick={handleSend} variant="contained">
             Send 💌
           </Button>
         </DialogActions>
