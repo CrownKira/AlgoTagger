@@ -7,9 +7,9 @@ AlgoTagger features state-of-the-art machine learning models such as Distilbert 
 ## Team Members
 The development of AlgoTagger was carried out by the following team members:
 
-[Toh Kar Wi](https://github.com/CrownKira)  
-[Ng Shuen Jin](https://github.com/shuenj) 
-[Song Zijin](https://github.com/SongZijin)  
+[Toh Kar Wi](https://github.com/CrownKira)    
+[Ng Shuen Jin](https://github.com/shuenj)   
+[Song Zijin](https://github.com/SongZijin)    
 [Lim Zhe Kang (Dylan)](https://github.com/limzk126)   
 [Daniel Sim Rui En](https://github.com/danielsimre)   
 [Nauman](https://github.com/Nauman-S)
