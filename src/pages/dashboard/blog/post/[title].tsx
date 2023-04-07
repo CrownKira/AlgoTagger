@@ -7,7 +7,7 @@ import { Box, Divider, Stack, Container, Typography, Pagination } from '@mui/mat
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // utils
-import axios from '../../../../utils/axios';
+import axios from '../../../../utils/axios/unauthorizedAxios';
 // layouts
 import DashboardLayout from '../../../../layouts/dashboard';
 // @types

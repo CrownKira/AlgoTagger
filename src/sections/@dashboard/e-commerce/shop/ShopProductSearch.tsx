@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 // @mui
 import { Link, Typography, Autocomplete, InputAdornment } from '@mui/material';
 // utils
-import axios from '../../../../utils/axios';
+import axios from '../../../../utils/axios/unauthorizedAxios';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // @types

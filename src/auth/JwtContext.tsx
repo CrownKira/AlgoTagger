@@ -1,6 +1,6 @@
 import { createContext, useEffect, useReducer, useCallback, useMemo } from 'react';
 // utils
-import axios from '../utils/axios';
+import axios from '../utils/axios/unauthorizedAxios';
 import localStorageAvailable from '../utils/localStorageAvailable';
 //
 import { isValidToken, setSession } from './utils';

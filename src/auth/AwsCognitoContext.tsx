@@ -7,7 +7,7 @@ import {
   AuthenticationDetails,
 } from 'amazon-cognito-identity-js';
 // utils
-import axios from '../utils/axios';
+import axios from '../utils/axios/unauthorizedAxios';
 // routes
 import { PATH_AUTH } from '../routes/paths';
 // config

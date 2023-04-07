@@ -8,7 +8,7 @@ import { Box, Stack, Drawer, IconButton, IconButtonProps } from '@mui/material';
 // hooks
 import useResponsive from '../../../../hooks/useResponsive';
 // utils
-import axios from '../../../../utils/axios';
+import axios from '../../../../utils/axios/unauthorizedAxios';
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // @types

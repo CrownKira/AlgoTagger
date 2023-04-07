@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 // @mui
 import { Grid, Button, Container, Stack } from '@mui/material';
 // utils
-import axios from '../../../utils/axios';
+import axios from '../../../utils/axios/unauthorizedAxios';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
