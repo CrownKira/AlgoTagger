@@ -53,7 +53,7 @@ export default function Header({ onOpenNav }: Props) {
           duration: theme.transitions.duration.shorter,
         }),
         // width: `calc(100% - ${NAV.W_DASHBOARD + 1}px)`,
-        height: HEADER.H_DASHBOARD_DESKTOP,
+        // height: HEADER.H_DASHBOARD_DESKTOP,
         // ...(isDesktop && {
         //   width: `calc(100% - ${NAV.W_DASHBOARD + 1}px)`,
         //   height: HEADER.H_DASHBOARD_DESKTOP,
