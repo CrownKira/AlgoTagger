@@ -26,7 +26,6 @@ import Iconify from 'src/components/iconify/Iconify';
 import { predictAlgo } from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
 import { IPredictionRequest } from 'src/@types/prediction';
-import { getQuestionTitles } from 'src/pages/dashboard/blog/data';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
 import { IBlogNewPost } from '../../../@types/blog';
@@ -42,7 +41,7 @@ import FormProvider, {
 //
 import BlogNewPostPreview from './BlogNewPostPreview';
 import FeedbackFormDialogs from './FeedbackFormDialogs';
-import { QUESTION_TITLES } from './data';
+import { QUESTIONS_TABLE, QUESTION_TITLES } from './data';
 
 // ----------------------------------------------------------------------
 
@@ -128,13 +127,20 @@ export default function BlogNewPostForm() {
           <Card sx={{ p: 3, height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <Stack spacing={1}>
-                {/* <RHFTextField name="title" label="Post Title" /> */}
                 <Autocomplete
                   fullWidth
                   freeSolo
-                  options={QUESTION_TITLES}
+                  options={QUESTIONS_TABLE.map((option) => option.question_title)}
                   renderInput={(params) => <TextField {...params} label="freeSolo" />}
                   sx={{ mb: 2 }}
+                  onChange={(event, value) => {
+                    if (value !== null) {
+                      const selectedOption = QUESTIONS_TABLE.find(
+                        (option) => option.question_title === value
+                      );
+                      setValue('description', selectedOption?.question_text ?? '');
+                    }
+                  }}
                 />
                 <RHFTextField name="description" label="Description" multiline rows={11} />
               </Stack>
