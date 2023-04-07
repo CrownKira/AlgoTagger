@@ -7,14 +7,14 @@ export type IPrediction = {
 export type IPredictionResult = {
   array: number;
   string: number;
-  linked_list: number;
-  tree: number;
-  graph: number;
+  dynamic_programming: number;
+  math: number;
   hash_table: number;
-  heap: number;
-  stack: number;
-  queue: number;
-  trie: number;
+  greedy: number;
+  sorting: number;
+  depth_first_search: number;
+  breadth_first_search: number;
+  binary_search: number;
 };
 
 export type IPredictionRequest = IPrediction;

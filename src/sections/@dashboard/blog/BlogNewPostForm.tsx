@@ -131,7 +131,7 @@ export default function BlogNewPostForm() {
                   fullWidth
                   freeSolo
                   options={QUESTIONS_TABLE.map((option) => option.question_title)}
-                  renderInput={(params) => <TextField {...params} label="freeSolo" />}
+                  renderInput={(params) => <TextField {...params} label="LeetCode Title" />}
                   sx={{ mb: 2 }}
                   onChange={(event, value) => {
                     if (value !== null) {
@@ -142,7 +142,7 @@ export default function BlogNewPostForm() {
                     }
                   }}
                 />
-                <RHFTextField name="description" label="Description" multiline rows={11} />
+                <RHFTextField name="description" label="LeetCode Description" multiline rows={11} />
               </Stack>
               <Box sx={{ flexGrow: 1 }} />
               <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
@@ -171,7 +171,7 @@ export default function BlogNewPostForm() {
 
         <Grid item xs={12} md={7}>
           <Card dir="ltr">
-            <CardHeader title="Column Multiple" />
+            <CardHeader title="Predicted Data Structures and Algorithms" />
             <CardContent>
               <ChartColumnMultiple />
             </CardContent>

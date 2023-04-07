@@ -28,7 +28,7 @@ export default function BlogNewPostPage() {
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>
-        <CustomBreadcrumbs
+        {/* <CustomBreadcrumbs
           heading="Create a new post"
           links={[
             {
@@ -43,7 +43,7 @@ export default function BlogNewPostPage() {
               name: 'Create',
             },
           ]}
-        />
+        /> */}
 
         <BlogNewPostForm />
       </Container>
