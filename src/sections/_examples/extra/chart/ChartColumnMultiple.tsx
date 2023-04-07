@@ -1,7 +1,10 @@
 import React from 'react';
 // components
 import { IPredictionResponse } from 'src/@types/prediction';
-import { DEFAULT_PREDICTION_RESPONSE } from 'src/services/predictAlgo';
+import {
+  DEFAULT_PREDICTION_RESPONSE,
+  getCategories as getAlgoCategories,
+} from 'src/sections/prediction/data';
 import Chart, { useChart } from '../../../../components/chart';
 
 // types
@@ -35,18 +38,8 @@ export default function ChartColumnMultiple({
       colors: ['transparent'],
     },
     xaxis: {
-      categories: [
-        'array',
-        'string',
-        'dynamic_programming',
-        'math',
-        'hash_table',
-        'greedy',
-        'sorting',
-        'depth_first_search',
-        'breadth_first_search',
-        'binary_search',
-      ],
+      // TODO: extract
+      categories: getAlgoCategories(),
     },
     yaxis: {
       max: 1.0,
@@ -54,7 +47,7 @@ export default function ChartColumnMultiple({
     },
     tooltip: {
       y: {
-        formatter: (value: number) => `$ ${value} thousands`,
+        formatter: (value: number) => `${value}`,
       },
     },
     plotOptions: { bar: { columnWidth: '36%' } },

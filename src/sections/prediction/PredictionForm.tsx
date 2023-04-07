@@ -23,11 +23,7 @@ import {
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
 import Iconify from 'src/components/iconify/Iconify';
-import {
-  DEFAULT_PREDICTION_RESPONSE,
-  predictAlgo,
-  DEFAULT_PREDICTION_REQUEST,
-} from 'src/services/predictAlgo';
+import { predictAlgo } from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
 import { IPredictionRequest, IPredictionResponse } from 'src/@types/prediction';
 import { PATH_DASHBOARD } from '../../routes/paths';
@@ -43,12 +39,12 @@ import FormProvider, {
   RHFAutocomplete,
 } from '../../components/hook-form';
 //
-import BlogNewPostPreview from './BlogNewPostPreview';
 import FeedbackFormDialogs from './FeedbackFormDialogs';
-import { QUESTIONS_TABLE, QUESTION_TITLES } from './data';
+import { DEFAULT_PREDICTION_REQUEST, DEFAULT_PREDICTION_RESPONSE, QUESTIONS_TABLE } from './data';
 
 // ----------------------------------------------------------------------
 
+// TODO: refactor
 // TODO: fetch from backend?
 const MODELS = ['DistilBERT', 'XGBoost'];
 

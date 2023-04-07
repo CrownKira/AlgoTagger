@@ -1,3 +1,46 @@
+import {
+  IPrediction,
+  IPredictionResult,
+  IPredictionRequest,
+  IPredictionResponse,
+} from 'src/@types/prediction';
+
+// TODO: move to type
+const defaultPrediction: IPrediction = {
+  title: '',
+  description: '',
+  model_used: 'DistilBERT',
+};
+
+export const DEFAULT_PREDICTION_RESULT: IPredictionResult = {
+  array: 0,
+  string: 0,
+  dynamic_programming: 0,
+  math: 0,
+  hash_table: 0,
+  greedy: 0,
+  sorting: 0,
+  depth_first_search: 0,
+  breadth_first_search: 0,
+  binary_search: 0,
+};
+
+export const DEFAULT_PREDICTION_REQUEST: IPredictionRequest = defaultPrediction;
+
+export const DEFAULT_PREDICTION_RESPONSE: IPredictionResponse = {
+  id: -1,
+  ...defaultPrediction,
+  prediction_result: DEFAULT_PREDICTION_RESULT,
+};
+
+export const getCategories = () =>
+  Object.keys(DEFAULT_PREDICTION_RESULT).map((category) =>
+    category
+      .split('_')
+      .map((word, index) => (index === 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+      .join(' ')
+  );
+
 export const QUESTIONS_TABLE = [
   {
     question_title: 'Two Sum',
