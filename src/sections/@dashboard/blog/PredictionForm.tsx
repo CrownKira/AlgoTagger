@@ -75,17 +75,9 @@ export default function PredictionForm() {
     getDefaultPredictionResponses()
   );
 
-  // const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(predictAlgo, {
-  //   manual: true,
-  //   onError: () => {
-  //     enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
-  //   },
-  // });
-
   const PredictionSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
-    // model_used: Yup.string().required('Model is required'),
   });
 
   const defaultValues = DEFAULT_PREDICTION_REQUEST;
@@ -105,7 +97,8 @@ export default function PredictionForm() {
 
   const values = watch();
 
-  console.log('test', errors);
+  console.log('ERRORS', errors);
+  console.log('VALUES', values);
 
   const handleReset = () => {
     reset();
@@ -114,22 +107,22 @@ export default function PredictionForm() {
   async function processModels(data: FormValuesProps) {
     const promises = MODELS.map(async (model) => {
       const res = await predictAlgo({ ...data, model_used: model });
-      return { model, res };
-    });
 
-    const results = await Promise.all(promises);
-
-    results.forEach(({ model, res }) => {
       console.log('DATA', res);
       setPredictionResponses((prevPredictionResponses) => ({
         ...prevPredictionResponses,
         [res.model_used]: res,
       }));
+
+      return { model, res };
     });
+
+    await Promise.all(promises);
   }
 
   const onSubmit = async (data: FormValuesProps) => {
-    console.log('on submit');
+    console.log('ON SUBMIT');
+
     try {
       setPredictionResponses(getDefaultPredictionResponses());
       reset();
