@@ -83,7 +83,7 @@ export default function UserProfilePage() {
   return (
     <>
       <Head>
-        <title> User: Profile | Minimal UI</title>
+        <title> User: Profile | AlgoTagger</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

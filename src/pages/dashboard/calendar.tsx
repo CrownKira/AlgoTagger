@@ -251,7 +251,7 @@ export default function CalendarPage() {
   return (
     <>
       <Head>
-        <title> Calendar | Minimal UI</title>
+        <title> Calendar | AlgoTagger</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'xl'}>

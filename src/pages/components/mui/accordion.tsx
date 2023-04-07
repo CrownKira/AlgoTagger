@@ -50,7 +50,7 @@ export default function MUIAccordionPage() {
   return (
     <>
       <Head>
-        <title> MUI Components: Accordion | Minimal UI</title>
+        <title> MUI Components: Accordion | AlgoTagger</title>
       </Head>
 
       <Box

@@ -236,7 +236,7 @@ export default function InvoiceListPage() {
   return (
     <>
       <Head>
-        <title> Invoice: List | Minimal UI</title>
+        <title> Invoice: List | AlgoTagger</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

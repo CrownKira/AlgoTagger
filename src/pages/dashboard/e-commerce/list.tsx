@@ -198,7 +198,7 @@ export default function EcommerceProductListPage() {
   return (
     <>
       <Head>
-        <title> Ecommerce: Product List | Minimal UI</title>
+        <title> Ecommerce: Product List | AlgoTagger</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

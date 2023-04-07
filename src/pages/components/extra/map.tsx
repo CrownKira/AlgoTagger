@@ -74,7 +74,7 @@ export default function DemoMapPage() {
   return (
     <>
       <Head>
-        <title> Extra Components: Map | Minimal UI</title>
+        <title> Extra Components: Map | AlgoTagger</title>
       </Head>
 
       <Box

@@ -32,7 +32,7 @@ export default function MUITextFieldPage() {
   return (
     <>
       <Head>
-        <title> MUI Components: Textfield | Minimal UI</title>
+        <title> MUI Components: Textfield | AlgoTagger</title>
       </Head>
 
       <Box

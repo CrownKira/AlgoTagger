@@ -46,7 +46,7 @@ export default function EcommerceProductEditPage() {
   return (
     <>
       <Head>
-        <title> Ecommerce: Edit product | Minimal UI</title>
+        <title> Ecommerce: Edit product | AlgoTagger</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

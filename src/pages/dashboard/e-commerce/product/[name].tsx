@@ -99,7 +99,7 @@ export default function EcommerceProductDetailsPage() {
   return (
     <>
       <Head>
-        <title>{`Ecommerce: ${product?.name || ''} | Minimal UI`}</title>
+        <title>{`Ecommerce: ${product?.name || ''} | AlgoTagger`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

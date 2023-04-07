@@ -87,7 +87,7 @@ export default function BlogPostPage() {
   return (
     <>
       <Head>
-        <title>{`Blog: ${post?.title || ''} | Minimal UI`}</title>
+        <title>{`Blog: ${post?.title || ''} | AlgoTagger`}</title>
       </Head>
 
       <Container maxWidth={themeStretch ? false : 'lg'}>

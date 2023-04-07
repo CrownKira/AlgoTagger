@@ -32,7 +32,7 @@ export default function FeedbackFormDialogs() {
         endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
         onClick={handleClickOpen}
       >
-        View All
+        Not Accurate?
       </Button>
 
       <Dialog open={open} onClose={handleClose}>

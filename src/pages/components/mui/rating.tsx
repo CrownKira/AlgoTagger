@@ -88,7 +88,7 @@ export default function MUIRatingPage() {
   return (
     <>
       <Head>
-        <title> MUI Components: Rating | Minimal UI</title>
+        <title> MUI Components: Rating | AlgoTagger</title>
       </Head>
 
       <Box

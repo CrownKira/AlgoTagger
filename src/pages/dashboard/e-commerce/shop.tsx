@@ -96,7 +96,7 @@ export default function EcommerceShopPage() {
   return (
     <>
       <Head>
-        <title> Ecommerce: Shop | Minimal UI</title>
+        <title> Ecommerce: Shop | AlgoTagger</title>
       </Head>
 
       <FormProvider methods={methods}>
