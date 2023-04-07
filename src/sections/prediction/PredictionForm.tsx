@@ -40,17 +40,23 @@ import FormProvider, {
 } from '../../components/hook-form';
 //
 import FeedbackFormDialogs from './FeedbackFormDialogs';
-import { DEFAULT_PREDICTION_REQUEST, DEFAULT_PREDICTION_RESPONSE, QUESTIONS_TABLE } from './data';
+import {
+  DEFAULT_PREDICTION_REQUEST,
+  DEFAULT_PREDICTION_RESPONSE,
+  MODELS,
+  QUESTIONS_TABLE,
+} from './data';
 
 // ----------------------------------------------------------------------
 
 // TODO: refactor
 // TODO: fetch from backend?
-const MODELS = ['DistilBERT', 'XGBoost'];
 
 type IPredictionResponses = {
   [key: string]: IPredictionResponse;
 };
+
+export type FormValuesProps = Omit<IPredictionRequest, 'model_used'>;
 
 const getDefaultPredictionResponses = () => {
   const res: IPredictionResponses = {};
@@ -62,12 +68,9 @@ const getDefaultPredictionResponses = () => {
   return res;
 };
 
-export type FormValuesProps = Omit<IPredictionRequest, 'model_used'>;
-
 // ----------------------------------------------------------------------
 
 export default function PredictionForm() {
-  const { enqueueSnackbar } = useSnackbar();
   const [predictionResponses, setPredictionResponses] = useState<IPredictionResponses>(
     getDefaultPredictionResponses()
   );

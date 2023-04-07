@@ -13,6 +13,7 @@ import Header from './header';
 import NavMini from './nav/NavMini';
 import NavVertical from './nav/NavVertical';
 import NavHorizontal from './nav/NavHorizontal';
+import Footer from './Footer';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ export default function DashboardLayout({ children }: Props) {
       <>
         <Header onOpenNav={handleOpen} />
         <Main>{children}</Main>
+        <Footer />
       </>
     );
   };

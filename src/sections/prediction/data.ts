@@ -5,7 +5,8 @@ import {
   IPredictionResponse,
 } from 'src/@types/prediction';
 
-// TODO: move to type
+export const MODELS = ['DistilBERT', 'XGBoost'];
+
 const defaultPrediction: IPrediction = {
   title: '',
   description: '',

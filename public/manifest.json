@@ -1,6 +1,6 @@
 {
-  "name": "React Material AlgoTagger",
-  "short_name": "Minimal-UI",
+  "name": "AlgoTagger",
+  "short_name": "AlgoTagger",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#000000",
