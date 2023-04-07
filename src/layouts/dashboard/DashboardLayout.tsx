@@ -42,15 +42,13 @@ export default function DashboardLayout({ children }: Props) {
 
   const renderNavVertical = <NavVertical openNav={open} onCloseNav={handleClose} />;
 
-  const renderContent = () => {
-    return (
-      <>
-        <Header onOpenNav={handleOpen} />
-        <Main>{children}</Main>
-        <Footer />
-      </>
-    );
-  };
+  const renderContent = () => (
+    <>
+      <Header onOpenNav={handleOpen} />
+      <Main>{children}</Main>
+      <Footer />
+    </>
+  );
 
   return <> {renderContent()} </>;
 }
