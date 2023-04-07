@@ -23,16 +23,16 @@ const defaultPredictionResult: IPredictionResult = {
   // stack: 0,
   // queue: 0,
   // trie: 0,
-  array: 0.5,
-  string: 0.5,
-  dynamic_programming: 0.5,
-  math: 0.5,
-  hash_table: 0.5,
-  greedy: 0.5,
-  sorting: 0.5,
-  depth_first_search: 0.5,
-  breadth_first_search: 0.5,
-  binary_search: 0.5,
+  array: 0,
+  string: 0,
+  dynamic_programming: 0,
+  math: 0,
+  hash_table: 0,
+  greedy: 0,
+  sorting: 0,
+  depth_first_search: 0,
+  breadth_first_search: 0,
+  binary_search: 0,
 };
 
 export const DEFAULT_PREDICTION_REQUEST: IPredictionRequest = defaultPrediction;
@@ -42,11 +42,11 @@ export const DEFAULT_PREDICTION_RESPONSE: IPredictionResponse = {
   prediction_result: defaultPredictionResult,
 };
 
-export const predictAlgo = async (input: IPredictionRequest): Promise<IPredictionResponse> => {
-  if (input.description.length === 0) {
-    return DEFAULT_PREDICTION_RESPONSE;
-  }
+export const predictAlgo = async (input: IPredictionRequest) => {
+  // if (input.description.length === 0) {
+  //   return DEFAULT_PREDICTION_RESPONSE;
+  // }
 
-  const res = await axios.post<IPredictionRequest, IPredictionResponse>('predict/', input);
+  const res = await axios.post<IPredictionResponse>('predict/', input);
   return res;
 };

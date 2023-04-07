@@ -49,6 +49,7 @@ import { QUESTIONS_TABLE, QUESTION_TITLES } from './data';
 
 // ----------------------------------------------------------------------
 
+// TODO: fetch from backend?
 const MODELS = ['DistilBERT', 'XGBoost'];
 
 type IPredictionResponses = {
@@ -104,17 +105,17 @@ export default function PredictionForm() {
     reset();
   };
 
-  async function processModels(data: FormValuesProps) {
+  async function processModels(formValues: FormValuesProps) {
     const promises = MODELS.map(async (model) => {
-      const res = await predictAlgo({ ...data, model_used: model });
+      const { data } = await predictAlgo({ ...formValues, model_used: model });
 
-      console.log('DATA', res);
-      setPredictionResponses((prevPredictionResponses) => ({
-        ...prevPredictionResponses,
-        [res.model_used]: res,
-      }));
+      console.log('DATA', data);
+      setPredictionResponses((prevPredictionResponses) => {
+        console.log('PREV PREDICTION RESPONSES', prevPredictionResponses);
+        // console.log('PREV PREDICTION RESPONSES', prevPredictionResponses)
 
-      return { model, res };
+        return { ...prevPredictionResponses, [data.model_used]: data };
+      });
     });
 
     await Promise.all(promises);
@@ -124,8 +125,7 @@ export default function PredictionForm() {
     console.log('ON SUBMIT');
 
     try {
-      setPredictionResponses(getDefaultPredictionResponses());
-      reset();
+      // setPredictionResponses(getDefaultPredictionResponses());
       await processModels(data);
     } catch (error) {
       console.error(error);

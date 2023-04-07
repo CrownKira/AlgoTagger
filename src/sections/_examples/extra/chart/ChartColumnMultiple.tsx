@@ -13,7 +13,8 @@ interface ChartColumnMultipleProps {
 }
 
 function convertToSeries(predictionResponses: IPredictionResponse[]) {
-  console.log('convert to series', predictionResponses);
+  console.log('CONVERT TO SERIES', predictionResponses);
+
   return predictionResponses.map((response) => ({
     name: response.model_used,
     data: Object.values(response.prediction_result),
@@ -25,7 +26,7 @@ export default function ChartColumnMultiple({
 }: ChartColumnMultipleProps) {
   const series = convertToSeries(predictionResponses);
 
-  console.log('testing', series);
+  console.log('CHART SERIES', series);
 
   const chartOptions = useChart({
     stroke: {
