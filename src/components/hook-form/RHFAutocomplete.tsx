@@ -37,7 +37,6 @@ export default function RHFAutocomplete<
       render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...field}
-          // onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
           onChange={(event, newValue, reason, details) => {
             // Call the custom onChange if provided
             if (onChange) {
