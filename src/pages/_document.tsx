@@ -34,13 +34,10 @@ export default class MyDocument extends Document {
           {/* Meta */}
           <meta
             name="description"
-            content="The revolutionary translation app that takes into account the context and cultural nuances of your translations. Say goodbye to awkward or misinformed translations and hello to accurate, contextually aware communication."
+            content="A multilabel classifier for LeetCode questions based on data structures and algorithms."
           />
-          <meta
-            name="keywords"
-            content="contextual translation, translation app, language learning, accurate translations, cultural context, effective communication, in-built dictionary, multiple translations, context explanations, language learner tool"
-          />
-          <meta name="author" content="NativeSay" />
+          <meta name="keywords" content="" />
+          <meta name="author" content="AlgoTagger" />
         </Head>
 
         <body>
