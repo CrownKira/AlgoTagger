@@ -1,9 +1,5 @@
-// form
 import { useFormContext, Controller } from 'react-hook-form';
-// @mui
 import { Autocomplete, AutocompleteProps, TextField } from '@mui/material';
-
-// ----------------------------------------------------------------------
 
 interface Props<
   T,
@@ -43,8 +39,8 @@ export default function RHFAutocomplete<
               onChange(event, newValue, reason, details);
             }
 
-            // Call the default setValue
-            setValue(name, newValue, { shouldValidate: true });
+            // Call the default setValue with newValue or an empty string, depending on the newValue value
+            setValue(name, newValue === null ? '' : newValue, { shouldValidate: true });
           }}
           renderInput={(params) => (
             <TextField
