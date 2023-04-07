@@ -1,14 +1,31 @@
+import React from 'react';
 // components
+import { IPredictionResponse } from 'src/@types/prediction';
+import { DEFAULT_PREDICTION_RESPONSE } from 'src/services/predictAlgo';
 import Chart, { useChart } from '../../../../components/chart';
+
+// types
 
 // ----------------------------------------------------------------------
 
-const series = [
-  { name: 'DistilBERT', data: [44, 55, 57, 56, 61, 58, 63, 60, 66] },
-  { name: 'XGBoost', data: [76, 85, 99, 98, 87, 82, 91, 14, 94] },
-];
+interface ChartColumnMultipleProps {
+  predictionResponses: IPredictionResponse[];
+}
 
-export default function ChartColumnMultiple() {
+function convertToSeries(predictionResponses: IPredictionResponse[]) {
+  return predictionResponses.map((response) => ({
+    name: response.model_used,
+    data: Object.values(response.prediction_result),
+  }));
+}
+
+export default function ChartColumnMultiple({
+  predictionResponses = [DEFAULT_PREDICTION_RESPONSE],
+}: ChartColumnMultipleProps) {
+  const series = convertToSeries(predictionResponses);
+
+  console.log('testing', series);
+
   const chartOptions = useChart({
     stroke: {
       show: true,
@@ -16,7 +33,6 @@ export default function ChartColumnMultiple() {
       colors: ['transparent'],
     },
     xaxis: {
-      // categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
       categories: [
         'array',
         'string',
@@ -29,6 +45,9 @@ export default function ChartColumnMultiple() {
         'breadth_first_search',
         'binary_search',
       ],
+    },
+    yaxis: {
+      max: 1.0,
     },
     tooltip: {
       y: {

@@ -23,7 +23,11 @@ import {
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
 import Iconify from 'src/components/iconify/Iconify';
-import { predictAlgo } from 'src/services/predictAlgo';
+import {
+  DEFAULT_PREDICTION_RESPONSE,
+  predictAlgo,
+  DEFAULT_PREDICTION_REQUEST,
+} from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
 import { IPredictionRequest } from 'src/@types/prediction';
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -81,12 +85,7 @@ export default function BlogNewPostForm() {
     model_used: Yup.string().required('Model is required'),
   });
 
-  const defaultValues = {
-    title: '',
-    description: '',
-    // TODO: extract const
-    model_used: 'DistilBERT',
-  };
+  const defaultValues = DEFAULT_PREDICTION_REQUEST;
 
   const methods = useForm<FormValuesProps>({
     resolver: yupResolver(NewBlogSchema),
@@ -173,7 +172,12 @@ export default function BlogNewPostForm() {
           <Card dir="ltr">
             <CardHeader title="Predicted Data Structures and Algorithms" />
             <CardContent>
-              <ChartColumnMultiple />
+              <ChartColumnMultiple
+                predictionResponses={[
+                  DEFAULT_PREDICTION_RESPONSE,
+                  { ...DEFAULT_PREDICTION_RESPONSE, model_used: 'XGBoost' },
+                ]}
+              />
             </CardContent>
             <Divider />
             <Box sx={{ p: 2, textAlign: 'right' }}>
