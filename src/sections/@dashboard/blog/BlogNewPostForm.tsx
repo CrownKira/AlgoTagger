@@ -35,6 +35,7 @@ import FormProvider, {
 } from '../../../components/hook-form';
 //
 import BlogNewPostPreview from './BlogNewPostPreview';
+import FeedbackFormDialogs from './FeedbackFormDialogs';
 
 // ----------------------------------------------------------------------
 
@@ -166,13 +167,7 @@ export default function BlogNewPostForm() {
             </CardContent>
             <Divider />
             <Box sx={{ p: 2, textAlign: 'right' }}>
-              <Button
-                size="small"
-                color="inherit"
-                endIcon={<Iconify icon="eva:arrow-ios-forward-fill" />}
-              >
-                View All
-              </Button>
+              <FeedbackFormDialogs />
             </Box>
           </Card>
         </Grid>
