@@ -16,14 +16,17 @@ import {
   CardHeader,
   CardContent,
   Divider,
+  Autocomplete,
+  TextField,
 } from '@mui/material';
 // routes
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
 import Iconify from 'src/components/iconify/Iconify';
-import { predictDataStructures } from 'src/services/runPrediction';
+import { predictAlgo } from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
 import { IPredictionRequest } from 'src/@types/prediction';
+import { getQuestionTitles } from 'src/pages/dashboard/blog/data';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
 import { IBlogNewPost } from '../../../@types/blog';
@@ -39,6 +42,7 @@ import FormProvider, {
 //
 import BlogNewPostPreview from './BlogNewPostPreview';
 import FeedbackFormDialogs from './FeedbackFormDialogs';
+import { QUESTION_TITLES } from './data';
 
 // ----------------------------------------------------------------------
 
@@ -65,15 +69,12 @@ export type FormValuesProps = IPredictionRequest;
 export default function BlogNewPostForm() {
   const { enqueueSnackbar } = useSnackbar();
 
-  const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(
-    predictDataStructures,
-    {
-      manual: true,
-      onError: () => {
-        enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
-      },
-    }
-  );
+  const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(predictAlgo, {
+    manual: true,
+    onError: () => {
+      enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
+    },
+  });
 
   const NewBlogSchema = Yup.object().shape({
     title: Yup.string().optional(),
@@ -109,6 +110,8 @@ export default function BlogNewPostForm() {
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
+      // const res = await getQuestionTitles();
+      // console.log(res);
       const res = await runPrediction(data);
       reset();
       enqueueSnackbar('Post success!');
@@ -124,8 +127,15 @@ export default function BlogNewPostForm() {
         <Grid item xs={12} md={5}>
           <Card sx={{ p: 3, height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <Stack spacing={3}>
-                <RHFTextField name="title" label="Post Title" />
+              <Stack spacing={1}>
+                {/* <RHFTextField name="title" label="Post Title" /> */}
+                <Autocomplete
+                  fullWidth
+                  freeSolo
+                  options={QUESTION_TITLES}
+                  renderInput={(params) => <TextField {...params} label="freeSolo" />}
+                  sx={{ mb: 2 }}
+                />
                 <RHFTextField name="description" label="Description" multiline rows={11} />
               </Stack>
               <Box sx={{ flexGrow: 1 }} />

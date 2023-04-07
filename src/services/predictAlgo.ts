@@ -32,9 +32,7 @@ export const DEFAULT_PREDICTION_RESPONSE: IPredictionResponse = {
   prediction_result: defaultPredictionResult,
 };
 
-export const predictDataStructures = async (
-  input: IPredictionRequest
-): Promise<IPredictionResponse> => {
+export const predictAlgo = async (input: IPredictionRequest): Promise<IPredictionResponse> => {
   if (input.description.length === 0) {
     return DEFAULT_PREDICTION_RESPONSE;
   }
