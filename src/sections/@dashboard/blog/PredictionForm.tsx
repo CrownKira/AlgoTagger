@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import {
@@ -29,7 +29,7 @@ import {
   DEFAULT_PREDICTION_REQUEST,
 } from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
-import { IPredictionRequest } from 'src/@types/prediction';
+import { IPredictionRequest, IPredictionResponse } from 'src/@types/prediction';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
 import { IBlogNewPost } from '../../../@types/blog';
@@ -49,46 +49,49 @@ import { QUESTIONS_TABLE, QUESTION_TITLES } from './data';
 
 // ----------------------------------------------------------------------
 
-const TAGS_OPTION = [
-  'Toy Story 3',
-  'Logan',
-  'Full Metal Jacket',
-  'Dangal',
-  'The Sting',
-  '2001: A Space Odyssey',
-  "Singin' in the Rain",
-  'Toy Story',
-  'Bicycle Thieves',
-  'The Kid',
-  'Inglourious Basterds',
-  'Snatch',
-  '3 Idiots',
-];
+const MODELS = ['DistilBERT', 'XGBoost'];
+
+type IPredictionResponses = {
+  [key: string]: IPredictionResponse;
+};
+
+const getDefaultPredictionResponses = () => {
+  const res: IPredictionResponses = {};
+
+  MODELS.forEach((model) => {
+    res[model] = { ...DEFAULT_PREDICTION_RESPONSE, model_used: model };
+  });
+
+  return res;
+};
+
+export type FormValuesProps = Omit<IPredictionRequest, 'model_used'>;
 
 // ----------------------------------------------------------------------
 
-export type FormValuesProps = IPredictionRequest;
-
-export default function BlogNewPostForm() {
+export default function PredictionForm() {
   const { enqueueSnackbar } = useSnackbar();
+  const [predictionResponses, setPredictionResponses] = useState<IPredictionResponses>(
+    getDefaultPredictionResponses()
+  );
 
-  const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(predictAlgo, {
-    manual: true,
-    onError: () => {
-      enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
-    },
-  });
+  // const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(predictAlgo, {
+  //   manual: true,
+  //   onError: () => {
+  //     enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
+  //   },
+  // });
 
-  const NewBlogSchema = Yup.object().shape({
-    title: Yup.string().optional(),
+  const PredictionSchema = Yup.object().shape({
+    title: Yup.string().required('Title is required'),
     description: Yup.string().required('Description is required'),
-    model_used: Yup.string().required('Model is required'),
+    // model_used: Yup.string().required('Model is required'),
   });
 
   const defaultValues = DEFAULT_PREDICTION_REQUEST;
 
   const methods = useForm<FormValuesProps>({
-    resolver: yupResolver(NewBlogSchema),
+    resolver: yupResolver(PredictionSchema),
     defaultValues,
   });
 
@@ -97,23 +100,40 @@ export default function BlogNewPostForm() {
     watch,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting, isValid, errors },
   } = methods;
 
   const values = watch();
+
+  console.log('test', errors);
 
   const handleReset = () => {
     reset();
   };
 
-  const onSubmit = async (data: FormValuesProps) => {
-    try {
-      // const res = await getQuestionTitles();
-      // console.log(res);
-      const res = await runPrediction(data);
-      reset();
-      enqueueSnackbar('Post success!');
+  async function processModels(data: FormValuesProps) {
+    const promises = MODELS.map(async (model) => {
+      const res = await predictAlgo({ ...data, model_used: model });
+      return { model, res };
+    });
+
+    const results = await Promise.all(promises);
+
+    results.forEach(({ model, res }) => {
       console.log('DATA', res);
+      setPredictionResponses((prevPredictionResponses) => ({
+        ...prevPredictionResponses,
+        [res.model_used]: res,
+      }));
+    });
+  }
+
+  const onSubmit = async (data: FormValuesProps) => {
+    console.log('on submit');
+    try {
+      setPredictionResponses(getDefaultPredictionResponses());
+      reset();
+      await processModels(data);
     } catch (error) {
       console.error(error);
     }
@@ -126,11 +146,12 @@ export default function BlogNewPostForm() {
           <Card sx={{ p: 3, height: '100%' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <Stack spacing={1}>
-                <Autocomplete
+                <RHFAutocomplete
+                  name="title"
+                  label="LeetCode Title"
                   fullWidth
                   freeSolo
                   options={QUESTIONS_TABLE.map((option) => option.question_title)}
-                  renderInput={(params) => <TextField {...params} label="LeetCode Title" />}
                   sx={{ mb: 2 }}
                   onChange={(event, value) => {
                     if (value !== null) {
@@ -161,7 +182,7 @@ export default function BlogNewPostForm() {
                   size="large"
                   loading={isSubmitting}
                 >
-                  Submit
+                  ✨ Submit ✨
                 </LoadingButton>
               </Stack>
             </Box>
@@ -172,12 +193,7 @@ export default function BlogNewPostForm() {
           <Card dir="ltr">
             <CardHeader title="Predicted Data Structures and Algorithms" />
             <CardContent>
-              <ChartColumnMultiple
-                predictionResponses={[
-                  DEFAULT_PREDICTION_RESPONSE,
-                  { ...DEFAULT_PREDICTION_RESPONSE, model_used: 'XGBoost' },
-                ]}
-              />
+              <ChartColumnMultiple predictionResponses={Object.values(predictionResponses)} />
             </CardContent>
             <Divider />
             <Box sx={{ p: 2, textAlign: 'right' }}>

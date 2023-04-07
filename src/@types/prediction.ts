@@ -1,5 +1,5 @@
 export type IPrediction = {
-  title?: string;
+  title: string;
   description: string;
   model_used: string;
 };

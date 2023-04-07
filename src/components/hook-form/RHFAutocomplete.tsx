@@ -25,6 +25,7 @@ export default function RHFAutocomplete<
   name,
   label,
   helperText,
+  onChange,
   ...other
 }: Omit<Props<T, Multiple, DisableClearable, FreeSolo>, 'renderInput'>) {
   const { control, setValue } = useFormContext();
@@ -36,7 +37,16 @@ export default function RHFAutocomplete<
       render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...field}
-          onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
+          // onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
+          onChange={(event, newValue, reason, details) => {
+            // Call the custom onChange if provided
+            if (onChange) {
+              onChange(event, newValue, reason, details);
+            }
+
+            // Call the default setValue
+            setValue(name, newValue, { shouldValidate: true });
+          }}
           renderInput={(params) => (
             <TextField
               label={label}
