@@ -14,7 +14,8 @@ module.exports = withTM({
   trailingSlash: true,
   env: {
     // HOST
-    HOST_API_KEY: 'https://api-dev-minimal-v4.vercel.app',
+    // HOST_API_KEY: 'https://api-dev-minimal-v4.vercel.app',
+    REACT_APP_HOST_API_KEY: process.env.REACT_APP_HOST_API_KEY,
     // MAPBOX
     MAPBOX_API: '',
     // FIREBASE
