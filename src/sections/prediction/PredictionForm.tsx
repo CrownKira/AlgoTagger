@@ -1,44 +1,17 @@
 import * as Yup from 'yup';
-import { useState, useCallback } from 'react';
-// next
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 // form
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import {
-  Grid,
-  Card,
-  Stack,
-  Button,
-  Typography,
-  CardHeader,
-  CardContent,
-  Divider,
-  Autocomplete,
-  TextField,
-} from '@mui/material';
+import { Grid, Card, Stack, Button, CardHeader, CardContent, Divider } from '@mui/material';
 // routes
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
-import Iconify from 'src/components/iconify/Iconify';
 import { predictAlgo } from 'src/services/predictAlgo';
-import { useRequest } from 'ahooks';
 import { IPredictionRequest, IPredictionResponse } from 'src/@types/prediction';
-import { PATH_DASHBOARD } from '../../routes/paths';
-// @types
-import { IBlogNewPost } from '../../@types/blog';
-// components
-import { useSnackbar } from '../../components/snackbar';
-import FormProvider, {
-  RHFSwitch,
-  RHFEditor,
-  RHFUpload,
-  RHFTextField,
-  RHFAutocomplete,
-} from '../../components/hook-form';
-//
+import FormProvider, { RHFTextField, RHFAutocomplete } from '../../components/hook-form';
 import FeedbackFormDialogs from './FeedbackFormDialogs';
 import {
   DEFAULT_PREDICTION_REQUEST,
@@ -48,9 +21,6 @@ import {
 } from './data';
 
 // ----------------------------------------------------------------------
-
-// TODO: refactor
-// TODO: fetch from backend?
 
 type IPredictionResponses = {
   [key: string]: IPredictionResponse;
@@ -92,7 +62,7 @@ export default function PredictionForm() {
     watch,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, errors },
   } = methods;
 
   const values = watch();
@@ -107,12 +77,9 @@ export default function PredictionForm() {
   async function processModels(formValues: FormValuesProps) {
     const promises = MODELS.map(async (model) => {
       const { data } = await predictAlgo({ ...formValues, model_used: model });
-
       console.log('DATA', data);
       setPredictionResponses((prevPredictionResponses) => {
         console.log('PREV PREDICTION RESPONSES', prevPredictionResponses);
-        // console.log('PREV PREDICTION RESPONSES', prevPredictionResponses)
-
         return { ...prevPredictionResponses, [data.model_used]: data };
       });
     });
@@ -124,7 +91,6 @@ export default function PredictionForm() {
     console.log('ON SUBMIT');
 
     try {
-      // setPredictionResponses(getDefaultPredictionResponses());
       await processModels(data);
     } catch (error) {
       console.error(error);
