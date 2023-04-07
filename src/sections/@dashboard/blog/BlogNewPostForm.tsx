@@ -21,6 +21,9 @@ import {
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
 import Iconify from 'src/components/iconify/Iconify';
+import { predictDataStructures } from 'src/services/runPrediction';
+import { useRequest } from 'ahooks';
+import { IPredictionRequest } from 'src/@types/prediction';
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // @types
 import { IBlogNewPost } from '../../../@types/blog';
@@ -57,35 +60,32 @@ const TAGS_OPTION = [
 
 // ----------------------------------------------------------------------
 
-export type FormValuesProps = IBlogNewPost;
+export type FormValuesProps = IPredictionRequest;
 
 export default function BlogNewPostForm() {
-  const { push } = useRouter();
-
   const { enqueueSnackbar } = useSnackbar();
 
-  const [openPreview, setOpenPreview] = useState(false);
+  const { loading: loadingPrediction, runAsync: runPrediction } = useRequest(
+    predictDataStructures,
+    {
+      manual: true,
+      onError: () => {
+        enqueueSnackbar('Unexpected error, please try again.', { variant: 'error' });
+      },
+    }
+  );
 
   const NewBlogSchema = Yup.object().shape({
-    title: Yup.string().required('Title is required'),
+    title: Yup.string().optional(),
     description: Yup.string().required('Description is required'),
-    tags: Yup.array().min(2, 'Must have at least 2 tags'),
-    metaKeywords: Yup.array().min(1, 'Meta keywords is required'),
-    cover: Yup.mixed().required('Cover is required').nullable(true),
-    content: Yup.string().required('Content is required'),
+    model_used: Yup.string().required('Model is required'),
   });
 
   const defaultValues = {
     title: '',
     description: '',
-    content: '',
-    cover: null,
-    tags: ['The Kid'],
-    publish: true,
-    comments: true,
-    metaTitle: '',
-    metaDescription: '',
-    metaKeywords: [],
+    // TODO: extract const
+    model_used: 'DistilBERT',
   };
 
   const methods = useForm<FormValuesProps>({
@@ -103,22 +103,16 @@ export default function BlogNewPostForm() {
 
   const values = watch();
 
-  const handleOpenPreview = () => {
-    setOpenPreview(true);
-  };
-
-  const handleClosePreview = () => {
-    setOpenPreview(false);
+  const handleReset = () => {
+    reset();
   };
 
   const onSubmit = async (data: FormValuesProps) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const res = await runPrediction(data);
       reset();
-      handleClosePreview();
       enqueueSnackbar('Post success!');
-      push(PATH_DASHBOARD.blog.posts);
-      console.log('DATA', data);
+      console.log('DATA', res);
     } catch (error) {
       console.error(error);
     }
@@ -141,7 +135,7 @@ export default function BlogNewPostForm() {
                   color="inherit"
                   variant="outlined"
                   size="large"
-                  onClick={handleOpenPreview}
+                  onClick={handleReset}
                 >
                   Clear
                 </Button>
