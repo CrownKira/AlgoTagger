@@ -38,7 +38,23 @@ export default function Header({ onOpenNav }: Props) {
 
   // const isOffset = useOffSetTop(HEADER.H_DASHBOARD_DESKTOP) && !isNavHorizontal;
 
-  const renderContent = <Logo sx={{ mr: 2.5 }} />;
+  const renderContent = (
+    <>
+      <Logo sx={{ mr: 2.5 }} />
+
+      <Stack
+        flexGrow={1}
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-end"
+        spacing={{ xs: 0.5, sm: 1.5 }}
+      >
+        <IconButton target="_blank" href="https://github.com/CrownKira/AlgoTagger">
+          <Iconify icon="eva:github-outline" />
+        </IconButton>
+      </Stack>
+    </>
+  );
 
   return (
     <AppBar
