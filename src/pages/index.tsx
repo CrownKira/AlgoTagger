@@ -1,93 +1,32 @@
-import { m, useScroll, useSpring } from 'framer-motion';
 // next
 import Head from 'next/head';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 // layouts
-import MainLayout from '../layouts/main';
+import DashboardLayout from '../layouts/dashboard';
+// components
+import { useSettingsContext } from '../components/settings';
 // sections
-import {
-  HomeHero,
-  HomeMinimal,
-  HomeDarkMode,
-  HomeLookingFor,
-  HomeForDesigner,
-  HomeColorPresets,
-  HomePricingPlans,
-  HomeAdvertisement,
-  HomeCleanInterfaces,
-  HomeHugePackElements,
-} from '../sections/home';
+import { PredictionForm } from '../sections/prediction';
 
 // ----------------------------------------------------------------------
 
-HomePage.getLayout = (page: React.ReactElement) => <MainLayout> {page} </MainLayout>;
+PredictionPage.getLayout = (page: React.ReactElement) => <DashboardLayout>{page}</DashboardLayout>;
 
 // ----------------------------------------------------------------------
 
-export default function HomePage() {
-  const theme = useTheme();
-
-  const { scrollYProgress } = useScroll();
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  const progress = (
-    <m.div
-      style={{
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 3,
-        zIndex: 1999,
-        position: 'fixed',
-        transformOrigin: '0%',
-        backgroundColor: theme.palette.primary.main,
-        scaleX,
-      }}
-    />
-  );
+export default function PredictionPage() {
+  const { themeStretch } = useSettingsContext();
 
   return (
     <>
       <Head>
-        <title> The starting point for your next project | AlgoTagger</title>
+        <title> Prediction | AlgoTagger</title>
       </Head>
 
-      {progress}
-
-      <HomeHero />
-
-      <Box
-        sx={{
-          overflow: 'hidden',
-          position: 'relative',
-          bgcolor: 'background.default',
-        }}
-      >
-        <HomeMinimal />
-
-        <HomeHugePackElements />
-
-        <HomeForDesigner />
-
-        <HomeDarkMode />
-
-        <HomeColorPresets />
-
-        <HomeCleanInterfaces />
-
-        <HomePricingPlans />
-
-        <HomeLookingFor />
-
-        <HomeAdvertisement />
-      </Box>
+      <Container maxWidth={themeStretch ? false : 'lg'}>
+        <PredictionForm />
+      </Container>
     </>
   );
 }

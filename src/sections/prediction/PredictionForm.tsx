@@ -30,18 +30,18 @@ import {
 } from 'src/services/predictAlgo';
 import { useRequest } from 'ahooks';
 import { IPredictionRequest, IPredictionResponse } from 'src/@types/prediction';
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD } from '../../routes/paths';
 // @types
-import { IBlogNewPost } from '../../../@types/blog';
+import { IBlogNewPost } from '../../@types/blog';
 // components
-import { useSnackbar } from '../../../components/snackbar';
+import { useSnackbar } from '../../components/snackbar';
 import FormProvider, {
   RHFSwitch,
   RHFEditor,
   RHFUpload,
   RHFTextField,
   RHFAutocomplete,
-} from '../../../components/hook-form';
+} from '../../components/hook-form';
 //
 import BlogNewPostPreview from './BlogNewPostPreview';
 import FeedbackFormDialogs from './FeedbackFormDialogs';

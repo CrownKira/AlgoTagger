@@ -50,6 +50,7 @@ export default function ChartColumnMultiple({
     },
     yaxis: {
       max: 1.0,
+      decimalsInFloat: 1,
     },
     tooltip: {
       y: {
