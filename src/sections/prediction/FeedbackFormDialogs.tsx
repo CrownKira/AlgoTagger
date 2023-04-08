@@ -60,8 +60,12 @@ export default function FeedbackFormDialogs() {
           <Button onClick={handleClose} color="inherit">
             Cancel
           </Button>
-          <Button onClick={handleSend} variant="contained">
-            Send 💌
+          <Button
+            onClick={handleSend}
+            variant="contained"
+            endIcon={<Iconify icon="eva:email-outline" />}
+          >
+            Send
           </Button>
         </DialogActions>
       </Dialog>

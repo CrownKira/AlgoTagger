@@ -11,6 +11,7 @@ import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
 import { predictAlgo } from 'src/services/predictAlgo';
 import { IPredictionRequest, IPredictionResponse } from 'src/@types/prediction';
+import Iconify from 'src/components/iconify/Iconify';
 import FormProvider, { RHFTextField, RHFAutocomplete } from '../../components/hook-form';
 import FeedbackFormDialogs from './FeedbackFormDialogs';
 import {
@@ -139,8 +140,9 @@ export default function PredictionForm() {
                   variant="contained"
                   size="large"
                   loading={isSubmitting}
+                  endIcon={<Iconify icon="wi:stars" />}
                 >
-                  ✨ Submit ✨
+                  Submit
                 </LoadingButton>
               </Stack>
             </Box>
