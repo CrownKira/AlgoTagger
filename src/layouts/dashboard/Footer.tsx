@@ -49,10 +49,10 @@ export default function Footer() {
     <Box
       component="footer"
       sx={{
-        py: 5,
         textAlign: 'center',
         position: 'relative',
-        bgcolor: 'background.default',
+        // py: 5,
+        // bgcolor: 'background.default',
       }}
     >
       <Container>
