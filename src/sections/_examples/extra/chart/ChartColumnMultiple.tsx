@@ -1,5 +1,4 @@
-import React from 'react';
-// components
+import React, { useState } from 'react';
 import { IPredictionResponse } from 'src/@types/prediction';
 import {
   DEFAULT_PREDICTION_RESPONSE,
@@ -7,12 +6,11 @@ import {
 } from 'src/sections/prediction/data';
 import Chart, { useChart } from '../../../../components/chart';
 
-// types
-
 // ----------------------------------------------------------------------
 
 interface ChartColumnMultipleProps {
   predictionResponses: IPredictionResponse[];
+  yValue: number;
 }
 
 function convertToSeries(predictionResponses: IPredictionResponse[]) {
@@ -26,9 +24,9 @@ function convertToSeries(predictionResponses: IPredictionResponse[]) {
 
 export default function ChartColumnMultiple({
   predictionResponses = [DEFAULT_PREDICTION_RESPONSE],
+  yValue,
 }: ChartColumnMultipleProps) {
   const series = convertToSeries(predictionResponses);
-
   console.log('CHART SERIES', series);
 
   const chartOptions = useChart({
@@ -38,7 +36,6 @@ export default function ChartColumnMultiple({
       colors: ['transparent'],
     },
     xaxis: {
-      // TODO: extract
       categories: getAlgoCategories(),
     },
     yaxis: {
@@ -50,7 +47,36 @@ export default function ChartColumnMultiple({
         formatter: (value: number) => `${value}`,
       },
     },
-    plotOptions: { bar: { columnWidth: '36%' } },
+    plotOptions: {
+      bar: {
+        columnWidth: '36%',
+        colors: {
+          ranges: [
+            {
+              from: 0,
+              to: yValue,
+              color: '#B2BEB5',
+            },
+          ],
+        },
+      },
+    },
+    annotations: {
+      yaxis: [
+        {
+          y: yValue,
+          borderColor: '#999',
+          label: {
+            borderColor: '#999',
+            style: {
+              color: '#fff',
+              background: '#999',
+            },
+            // text: 'Reference line',
+          },
+        },
+      ],
+    },
   });
 
   return <Chart type="bar" series={series} options={chartOptions} height={320} />;

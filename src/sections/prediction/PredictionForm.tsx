@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Grid, Card, Stack, Button, CardHeader, CardContent, Divider } from '@mui/material';
+import { Grid, Card, Stack, Button, CardHeader, CardContent, Divider, Slider } from '@mui/material';
 // routes
 import { ChartColumnMultiple } from 'src/sections/_examples/extra/chart';
 import { Box } from '@mui/system';
@@ -45,6 +45,7 @@ export default function PredictionForm() {
   const [predictionResponses, setPredictionResponses] = useState<IPredictionResponses>(
     getDefaultPredictionResponses()
   );
+  const [yValue, setYValue] = useState(0.5);
 
   const PredictionSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -153,10 +154,25 @@ export default function PredictionForm() {
           <Card dir="ltr">
             <CardHeader title="Predicted Data Structures and Algorithms" />
             <CardContent>
-              <ChartColumnMultiple predictionResponses={Object.values(predictionResponses)} />
+              <ChartColumnMultiple
+                predictionResponses={Object.values(predictionResponses)}
+                yValue={yValue}
+              />
             </CardContent>
             <Divider />
-            <Box sx={{ p: 2, textAlign: 'right' }}>
+            <Box
+              sx={{ p: 2, textAlign: 'right', display: 'flex', justifyContent: 'space-between' }}
+            >
+              <Box sx={{ width: 200 }}>
+                <Slider
+                  value={yValue}
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  onChange={(event, newValue) => setYValue(newValue as number)}
+                  valueLabelDisplay="auto"
+                />
+              </Box>
               <FeedbackFormDialogs />
             </Box>
           </Card>
